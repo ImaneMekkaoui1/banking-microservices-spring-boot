@@ -1,7 +1,11 @@
 package org.mekkaoui.bankaccountservice.web;
 
+import org.mekkaoui.bankaccountservice.dto.BankAccountRequestDTO;
+import org.mekkaoui.bankaccountservice.dto.BankAccountRespnseDTO;
 import org.mekkaoui.bankaccountservice.entities.BankAccount;
+import org.mekkaoui.bankaccountservice.mappers.AccountMapper;
 import org.mekkaoui.bankaccountservice.repositories.BankAccountRepository;
+import org.mekkaoui.bankaccountservice.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -9,11 +13,16 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/api")
 public class AccountRestController {
     private BankAccountRepository bankAccountRepository;
+    private AccountService accountService;
+    private AccountMapper accountMapper;
 
-    public AccountRestController(BankAccountRepository bankAccountRepository) {
+    public AccountRestController(BankAccountRepository bankAccountRepository, AccountService accountService, AccountMapper accountMapper) {
         this.bankAccountRepository = bankAccountRepository;
+        this.accountService = accountService;
+        this.accountMapper = accountMapper;
     }
 
     @GetMapping("/bankAccounts")
@@ -28,9 +37,8 @@ public class AccountRestController {
     }
 
     @PostMapping("/bankAccounts")
-    public BankAccount saveBankAccount(@RequestBody BankAccount bankAccount) {
-        if(bankAccount.getId()==null) bankAccount.setId(UUID.randomUUID().toString());
-        return bankAccountRepository.save(bankAccount);
+    public BankAccountRespnseDTO save(@RequestBody BankAccountRequestDTO requestDTO) {
+        return accountService.addAccount(requestDTO);
     }
 
     @PutMapping("/bankAccounts/{id}")
