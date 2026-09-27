@@ -1,7 +1,7 @@
 package org.mekkaoui.bankaccountservice.web;
 
 import org.mekkaoui.bankaccountservice.dto.BankAccountRequestDTO;
-import org.mekkaoui.bankaccountservice.dto.BankAccountRespnseDTO;
+import org.mekkaoui.bankaccountservice.dto.BankAccountResponseDTO;
 import org.mekkaoui.bankaccountservice.entities.BankAccount;
 import org.mekkaoui.bankaccountservice.mappers.AccountMapper;
 import org.mekkaoui.bankaccountservice.repositories.BankAccountRepository;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -37,7 +36,7 @@ public class AccountRestController {
     }
 
     @PostMapping("/bankAccounts")
-    public BankAccountRespnseDTO save(@RequestBody BankAccountRequestDTO requestDTO) {
+    public BankAccountResponseDTO save(@RequestBody BankAccountRequestDTO requestDTO) {
         return accountService.addAccount(requestDTO);
     }
 

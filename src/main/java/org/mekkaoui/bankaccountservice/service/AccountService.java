@@ -1,10 +1,15 @@
 package org.mekkaoui.bankaccountservice.service;
 
 import org.mekkaoui.bankaccountservice.dto.BankAccountRequestDTO;
-import org.mekkaoui.bankaccountservice.dto.BankAccountRespnseDTO;
-import org.mekkaoui.bankaccountservice.entities.BankAccount;
+import org.mekkaoui.bankaccountservice.dto.BankAccountResponseDTO;
 
 public interface AccountService {
-     BankAccountRespnseDTO addAccount(BankAccountRequestDTO accountDTO);
+
+     BankAccountResponseDTO addAccount(BankAccountRequestDTO accountDTO);
+
+     BankAccountResponseDTO updateAccount(
+             String id,
+             BankAccountRequestDTO accountDTO
+     );
 
 }

@@ -1,7 +1,7 @@
 package org.mekkaoui.bankaccountservice.service;
 
 import org.mekkaoui.bankaccountservice.dto.BankAccountRequestDTO;
-import org.mekkaoui.bankaccountservice.dto.BankAccountRespnseDTO;
+import org.mekkaoui.bankaccountservice.dto.BankAccountResponseDTO;
 import org.mekkaoui.bankaccountservice.entities.BankAccount;
 import org.mekkaoui.bankaccountservice.mappers.AccountMapper;
 import org.mekkaoui.bankaccountservice.repositories.BankAccountRepository;
@@ -21,7 +21,7 @@ public class AccountServiceImpl implements AccountService {
     private AccountMapper accountMapper;
 
     @Override
-    public BankAccountRespnseDTO addAccount(BankAccountRequestDTO accountDTO) {
+    public BankAccountResponseDTO addAccount(BankAccountRequestDTO accountDTO) {
 
         // DTO Request → Entity(Mapping)
         BankAccount bankAccount = BankAccount.builder()
@@ -35,8 +35,26 @@ public class AccountServiceImpl implements AccountService {
 
         BankAccount saveBankAccount = bankAccountRepository.save(bankAccount);
 
-        BankAccountRespnseDTO bankAccountRespnseDTO = accountMapper.fromBankAccount(saveBankAccount);
+        BankAccountResponseDTO bankAccountResponseDTO = accountMapper.fromBankAccount(saveBankAccount);
 
-        return bankAccountRespnseDTO;
+        return bankAccountResponseDTO;
+    }
+
+    @Override
+    public BankAccountResponseDTO updateAccount(
+            String id,
+            BankAccountRequestDTO accountDTO) {
+
+        BankAccount bankAccount = bankAccountRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(
+                        "Bank account not found: " + id));
+
+        bankAccount.setBalance(accountDTO.getBalance());
+        bankAccount.setCurrency(accountDTO.getCurrency());
+        bankAccount.setType(accountDTO.getType());
+
+        BankAccount updatedAccount = bankAccountRepository.save(bankAccount);
+
+        return accountMapper.fromBankAccount(updatedAccount);
     }
 }
