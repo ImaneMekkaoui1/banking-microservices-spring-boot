@@ -1,7 +1,5 @@
 package org.mekkaoui.bankaccountservice.dto;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +10,7 @@ import java.util.Date;
 @Data @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BankAccountRespnseDTO {
+public class BankAccountResponseDTO {
     private String id;
     private Date createdAt;
     private Double balance;
